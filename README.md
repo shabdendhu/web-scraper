@@ -209,15 +209,37 @@ The system provides detailed error logging and handles:
 
 ```
 web-scraper/
-├── core/                # Core API service
-│   ├── src/
-│   ├── prisma/
-│   └── package.json
-├── scrapper/           # Scraping service
-│   ├── src/
-│   └── package.json
+├── README.md
+├── core
+│   ├── .env
+│   ├── .gitignore
+│   ├── index.js
+│   ├── package.json
+│   ├── prisma
+│   │   ├── migrations
+│   │   │   ├── 20241219181328_add_datatype_field
+│   │   │   │   └── migration.sql
+│   │   │   └── migration_lock.toml
+│   │   └── schema.prisma
+│   └── yarn.lock
 ├── docker-compose.yml
-└── README.md
+└── scrapper
+    ├── .env
+    ├── combined.log
+    ├── error.log
+    ├── package.json
+    ├── src
+    │   ├── config
+    │   │   └── kafka.js
+    │   ├── index.js
+    │   ├── services
+    │   │   ├── browser.js
+    │   │   ├── contentExtractor.js
+    │   │   ├── pageNavigator.js
+    │   │   └── scraper.js
+    │   └── utils
+    │       └── logger.js
+    └── yarn.lock
 ```
 
 ## Contributing
