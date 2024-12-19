@@ -1,0 +1,35 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ScrapingTask {
+  id          String        @id @default(uuid())
+  url         String
+  status      String        @default("pending") // pending, processing, completed, failed
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  error       String? // Error message if failed
+  pages       Int           @default(1)
+  currentPage Int           @default(0)
+  dataType    String // Add this line - identifier for the type of data being scraped
+  config      Json? // Scraping configuration (selectors, rules, etc)
+  items       ScrapedItem[]
+}
+
+model ScrapedItem {
+  id        String       @id @default(uuid())
+  taskId    String
+  task      ScrapingTask @relation(fields: [taskId], references: [id])
+  sourceUrl String? // URL where the item was found
+  data      Json // Flexible JSON field to store any structured data
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([taskId])
+}
